@@ -123,4 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'artist_id' => env('SPOTIFY_ARTIST_ID'),
+
 ];

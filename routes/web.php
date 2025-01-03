@@ -1,8 +1,9 @@
 <?php
 
+use App\Livewire\Releases;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'site.index')
+Route::get('/', Releases::class)
     ->name('site.index');
 
 Route::view('profile', 'profile')

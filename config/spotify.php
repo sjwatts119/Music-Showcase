@@ -42,5 +42,4 @@ return [
         'locale' => null,
         'market' => null,
     ],
-
 ];
