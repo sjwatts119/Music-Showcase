@@ -1,3 +1,3 @@
 <x-app-layout>
-    <live
+    Home Page
 </x-app-layout>
