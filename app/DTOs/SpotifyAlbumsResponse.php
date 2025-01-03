@@ -25,7 +25,9 @@ readonly class SpotifyAlbumsResponse
             offset: $data['offset'],
             previous: $data['previous'],
             total: $data['total'],
-            items: collect($data['items'])->map(fn ($item) => SpotifyAlbum::fromArray($item))
+            items: collect($data['items'])
+                ->map(fn ($item) => SpotifyAlbum::fromArray($item))
+                ->sortByDesc('releaseDate'),
         );
     }
 }

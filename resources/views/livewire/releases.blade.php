@@ -4,7 +4,7 @@
             <div class="flex gap-4">
                 <div class="flex-shrink">
                     <img
-                        src="{{ $release->images->first()->url }}"
+                        src="{{ $release->image }}"
                         alt="{{ $release->name }}"
                         class="w-24 h-24 rounded-lg"
                     >

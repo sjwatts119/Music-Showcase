@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use Aerni\Spotify\Exceptions\SpotifyApiException;
+use App\Jobs\UpdateReleases;
 use App\Traits\HasReleases;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
@@ -18,6 +19,8 @@ class Releases extends Component
     #[Layout('layouts.app')]
     public function render(): View
     {
+        (new UpdateReleases())->handle();
+
         return view('livewire.releases')
             ->with([
                 'releases' => $this->releases(),
