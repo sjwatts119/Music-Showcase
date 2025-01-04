@@ -24,39 +24,34 @@ class UpdateReleases implements ShouldQueue
      */
     public function handle(): void
     {
-//        if(Release::first()?->created_at->diffInDays() < 1) {
-//            return;
-//        }
-
         $releases = $this->releases();
 
         DB::transaction(function () use ($releases) {
             $this->deleteAllReleases();
 
             foreach ($releases as $release) {
-                $this->updateOrCreateRelease($release);
+                $this->createRelease($release);
             }
         });
 
         cache()->forget('releases');
     }
 
-    private function updateOrCreateRelease(SpotifyRelease $release): void
+    private function createRelease(SpotifyRelease $release): void
     {
-        $newRelease = Release::updateOrCreate(
-            ['spotify_id' => $release->id],
-            [
-                'name' => $release->name,
-                'album_type' => $release->albumType,
-                'total_tracks' => $release->totalTracks,
-                'release_date' => $release->releaseDate,
-                'uri' => $release->uri,
-                'href' => $release->href,
-            ]
-        );
+        $newRelease = Release::create([
+            'spotify_id' => $release->id,
+            'name' => $release->name,
+            'album_type' => $release->albumType,
+            'total_tracks' => $release->totalTracks,
+            'href' => $release->href,
+            'release_date' => $release->releaseDate,
+            'uri' => $release->uri,
+            'album_group' => $release->albumGroup,
+        ]);
 
         foreach ($release->images as $image) {
-            $newRelease->media()->updateOrCreate(
+            $newRelease->media()->create(
                 ['url' => $image->url],
                 ['url' => $image->url]
             );
@@ -74,7 +69,7 @@ class UpdateReleases implements ShouldQueue
             $artistIds[] = $artist->id;
         }
 
-        $newRelease->artists()->syncWithoutDetaching($artistIds);
+        $newRelease->artists()->sync($artistIds);
     }
 
     private function deleteAllReleases(): void

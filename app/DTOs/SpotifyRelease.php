@@ -27,7 +27,7 @@ readonly class SpotifyRelease
             name: $data['name'],
             albumType: $data['album_type'],
             totalTracks: $data['total_tracks'],
-            href: $data['href'],
+            href: $data['external_urls']['spotify'],
             releaseDate: Carbon::parse($data['release_date']),
             images: collect($data['images'])->map(fn ($image) => SpotifyImage::fromArray($image)),
             artists: collect($data['artists'])->map(fn ($artist) => SpotifyArtist::fromArray($artist)),

@@ -17,19 +17,29 @@ class Releases extends Component
     #[Layout('layouts.app')]
     public function render(): View
     {
-        (new UpdateReleases())->handle();
+        if(Release::first()?->created_at->diffInDays() > 1) {
+            (new UpdateReleases())->handle();
+        }
 
-        $releases = Release::with('artists')
-            ->orderByDesc('release_date')
+        $releases = Release::orderByDesc('release_date')
             ->with([
                 'media',
                 'artists',
             ])
             ->paginate(10);
 
+        $newReleases = Release::orderByDesc('release_date')
+            ->with([
+                'media',
+                'artists',
+            ])
+            ->newReleases()
+            ->get();
+
         return view('livewire.releases')
             ->with([
                 'releases' => $releases,
+                'newReleases' =>  $newReleases,
             ]);
     }
 }

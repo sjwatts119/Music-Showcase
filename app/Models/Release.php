@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\HasTimestampScopes;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Release extends Model
 {
+    use HasTimestampScopes;
+
     protected $casts = [
         'release_date' => 'date',
     ];
@@ -32,5 +36,13 @@ class Release extends Model
     public function artists(): BelongsToMany
     {
         return $this->belongsToMany(Artist::class);
+    }
+
+    /*
+     * Releases from the last 6 months TODO shorten
+     */
+    public function scopeNewReleases(Builder $query): Builder
+    {
+        return $query->after(now()->subMonths(6), 'release_date');
     }
 }
