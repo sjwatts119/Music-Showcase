@@ -15,3 +15,7 @@
         --color-accent-foreground: var(--color-lime-950);
     }
 }
+
+.glide__bullet--active {
+    background-color: var(--color-accent) !important;
+}

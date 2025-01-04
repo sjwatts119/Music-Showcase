@@ -1,4 +1,32 @@
-<div class="max-w-screen-lg m-auto py-8 space-y-8">
+<div class="max-w-screen-lg m-auto p-4 md:p-8 space-y-8">
+    <x-app.carousel class="h-[50vh]">
+        @foreach ($newReleases as $heroImage)
+            <x-app.carousel.slide class="w-full rounded-lg overflow-hidden">
+                    <img loading="lazy"
+                         src="{{ $heroImage->media->first()->url }}"
+                         alt="{{ $heroImage->name ?? 'Slide ' . $loop->index + 1 }}"
+                         class="object-cover w-full h-full">
+            </x-app.carousel.slide>
+        @endforeach
+
+        <x-slot:controls>
+            <div class="flex items-center justify-between">
+                <div data-glide-el="controls[nav]" class="flex gap-1">
+                    @foreach ($newReleases as $index => $heroImage)
+                        <button type="button"
+                                data-glide-dir="={{ $index }}"
+                                title="Go to slide {{ $index + 1 }}"
+                                class="w-3 h-3 transition-colors rounded-full bg-zinc-700"/>
+                    @endforeach
+                </div>
+                <div data-glide-el="controls">
+                    <flux:button data-glide-dir="<" variant="ghost" icon="chevron-left" />
+
+                    <flux:button data-glide-dir=">" variant="ghost" icon="chevron-right" />
+                </div>
+            </div>
+        </x-slot:controls>
+    </x-app.carousel>
 
     <div class="space-y-4">
         <flux:heading size="xl" level="2">New Releases</flux:heading>
@@ -36,7 +64,7 @@
 
     <div class="space-y-4">
         <flux:heading size="xl" level="2">All Releases</flux:heading>
-        <div class="grid grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
             @foreach($releases as $release)
                 <a href="{{ $release->href }}">
                     <img src="{{ $release->media->first()->url}}"
@@ -46,8 +74,5 @@
                 </a>
             @endforeach
         </div>
-        {{ $releases->links() }}
-
     </div>
-
 </div>

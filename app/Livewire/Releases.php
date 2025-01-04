@@ -31,7 +31,7 @@ class Releases extends Component
                 'media',
                 'artists',
             ])
-            ->paginate(10);
+            ->get();
 
         $newReleases = Release::orderByDesc('release_date')
             ->with([
