@@ -14,7 +14,8 @@ new class extends Component
 
         $this->redirect('/', navigate: true);
     }
-}; ?>
+};
+?>
 
 <div>
     <flux:header container class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
@@ -43,7 +44,9 @@ new class extends Component
         <flux:spacer />
 
         <flux:navbar class="-mb-px">
-            <flux:navbar.item icon="magnifying-glass" href="#" label="Search" />
+            <flux:modal.trigger name="search" shortcut="cmd.k">
+                <flux:navbar.item icon="magnifying-glass" label="Search" />
+            </flux:modal.trigger>
         </flux:navbar>
 
         @auth
@@ -78,5 +81,20 @@ new class extends Component
             <flux:navlist.item icon="information-circle" href="#">Help</flux:navlist.item>
         </flux:navlist>
     </flux:sidebar>
+
+    <flux:modal name="search" variant="bare" class="w-full max-w-[30rem] my-[12vh] max-h-screen overflow-y-hidden" x-on:keydown.cmd.k.document="$el.showModal()">
+        <flux:command class="border-none shadow-lg inline-flex flex-col max-h-[76vh]">
+            <flux:command.input placeholder="Search..." closable />
+
+            <flux:command.items>
+                <flux:command.item icon="user-plus" kbd="⌘A">Assign to…</flux:command.item>
+                <flux:command.item icon="document-plus">Create new file</flux:command.item>
+                <flux:command.item icon="folder-plus" kbd="⌘⇧N">Create new project</flux:command.item>
+                <flux:command.item icon="book-open">Documentation</flux:command.item>
+                <flux:command.item icon="newspaper">Changelog</flux:command.item>
+                <flux:command.item icon="cog-6-tooth" kbd="⌘,">Settings</flux:command.item>
+            </flux:command.items>
+        </flux:command>
+    </flux:modal>
 </div>
 

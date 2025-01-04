@@ -15,14 +15,16 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @fluxStyles
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-zinc-100 dark:bg-zinc-900">
+    <body class="font-sans antialiased bg-zinc-100 dark:bg-zinc-900">
+        <div class="min-h-screen">
             <livewire:layout.navigation />
 
             <main>
                 {{ $slot }}
             </main>
         </div>
+
+        <x-footer />
         @fluxScripts
     </body>
 </html>
