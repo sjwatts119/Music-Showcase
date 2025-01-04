@@ -43,6 +43,6 @@ class Release extends Model
      */
     public function scopeNewReleases(Builder $query): Builder
     {
-        return $query->after(now()->subMonths(6), 'release_date');
+        return $query->after(now()->subMonths(24), 'release_date');
     }
 }

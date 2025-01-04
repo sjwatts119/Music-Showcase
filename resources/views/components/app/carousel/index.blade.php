@@ -1,20 +1,12 @@
 @props([
     'config' => [
         'type' => 'carousel',
-        'perView' => 2,
+        'perView' => 1,
         'gap' => 24,
         'autoplay' => 5000,
         'hoverpause' => true,
-        'peek' => 60,
+        'peek' => 48,
         'breakpoints' => [
-            '1280' => [
-                'perView' => 2,
-                'peek' => 48,
-            ],
-            '768' => [
-                'perView' => 2,
-                'peek' => 0,
-            ],
             '640' => [
                 'perView' => 1,
                 'peek' => 0,
