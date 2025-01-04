@@ -4,7 +4,7 @@ namespace App\DTOs;
 
 use Illuminate\Support\Collection;
 
-readonly class SpotifyAlbumsResponse
+readonly class SpotifyReleasesResponse
 {
     public function __construct(
         public string $href,
@@ -26,7 +26,7 @@ readonly class SpotifyAlbumsResponse
             previous: $data['previous'],
             total: $data['total'],
             items: collect($data['items'])
-                ->map(fn ($item) => SpotifyAlbum::fromArray($item))
+                ->map(fn ($item) => SpotifyRelease::fromArray($item))
                 ->sortByDesc('releaseDate'),
         );
     }

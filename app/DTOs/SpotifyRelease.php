@@ -5,7 +5,7 @@ namespace App\DTOs;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
-readonly class SpotifyAlbum
+readonly class SpotifyRelease
 {
     public function __construct(
         public string $id,

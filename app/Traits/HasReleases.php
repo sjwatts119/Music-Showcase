@@ -4,8 +4,8 @@ namespace App\Traits;
 
 use Aerni\Spotify\Exceptions\SpotifyApiException;
 use Aerni\Spotify\Facades\SpotifyFacade as Spotify;
-use App\DTOs\SpotifyAlbum;
-use App\DTOs\SpotifyAlbumsResponse;
+use App\DTOs\SpotifyRelease;
+use App\DTOs\SpotifyReleasesResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
@@ -42,6 +42,6 @@ trait HasReleases
     protected function releases(): Collection
     {
         return collect($this->getReleasesResponse())
-            ->map(fn ($release) => SpotifyAlbum::fromArray($release));
+            ->map(fn ($release) => SpotifyRelease::fromArray($release));
     }
 }

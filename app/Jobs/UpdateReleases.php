@@ -3,8 +3,9 @@
 namespace App\Jobs;
 
 use Aerni\Spotify\Exceptions\SpotifyApiException;
-use App\DTOs\SpotifyAlbum;
+use App\DTOs\SpotifyRelease;
 use App\Models\Artist;
+use App\Models\Media;
 use App\Models\Release;
 use App\Traits\HasReleases;
 use Illuminate\Bus\Queueable;
@@ -29,48 +30,57 @@ class UpdateReleases implements ShouldQueue
 
         $releases = $this->releases();
 
-        foreach ($releases as $release) {
-            $this->updateOrCreateRelease($release);
-        }
+        DB::transaction(function () use ($releases) {
+            $this->deleteAllReleases();
+
+            foreach ($releases as $release) {
+                $this->updateOrCreateRelease($release);
+            }
+        });
 
         cache()->forget('releases');
     }
 
-    private function updateOrCreateRelease(SpotifyAlbum $release): void
+    private function updateOrCreateRelease(SpotifyRelease $release): void
     {
-        DB::transaction(function () use ($release) {
-            $newRelease = Release::updateOrCreate(
-                ['spotify_id' => $release->id],
+        $newRelease = Release::updateOrCreate(
+            ['spotify_id' => $release->id],
+            [
+                'name' => $release->name,
+                'album_type' => $release->albumType,
+                'total_tracks' => $release->totalTracks,
+                'release_date' => $release->releaseDate,
+                'uri' => $release->uri,
+                'href' => $release->href,
+            ]
+        );
+
+        foreach ($release->images as $image) {
+            $newRelease->media()->updateOrCreate(
+                ['url' => $image->url],
+                ['url' => $image->url]
+            );
+        }
+
+        $artistIds = [];
+        foreach ($release->artists as $artistData) {
+            $artist = Artist::updateOrCreate(
+                ['spotify_id' => $artistData->id],
                 [
-                    'name' => $release->name,
-                    'album_type' => $release->albumType,
-                    'total_tracks' => $release->totalTracks,
-                    'release_date' => $release->releaseDate,
-                    'uri' => $release->uri,
-                    'href' => $release->href,
+                    'name' => $artistData->name,
+                    'href' => $artistData->href,
                 ]
             );
+            $artistIds[] = $artist->id;
+        }
 
-            foreach ($release->images as $image) {
-                $newRelease->media()->updateOrCreate(
-                    ['url' => $image->url],
-                    ['url' => $image->url]
-                );
-            }
+        $newRelease->artists()->syncWithoutDetaching($artistIds);
+    }
 
-            $artistIds = [];
-            foreach ($release->artists as $artistData) {
-                $artist = Artist::updateOrCreate(
-                    ['spotify_id' => $artistData->id],
-                    [
-                        'name' => $artistData->name,
-                        'href' => $artistData->href,
-                    ]
-                );
-                $artistIds[] = $artist->id;
-            }
-
-            $newRelease->artists()->syncWithoutDetaching($artistIds);
-        });
+    private function deleteAllReleases(): void
+    {
+        Release::query()->delete();
+        Artist::query()->delete();
+        Media::query()->delete();
     }
 }
