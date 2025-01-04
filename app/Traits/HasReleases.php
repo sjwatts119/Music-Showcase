@@ -4,7 +4,9 @@ namespace App\Traits;
 
 use Aerni\Spotify\Exceptions\SpotifyApiException;
 use Aerni\Spotify\Facades\SpotifyFacade as Spotify;
+use App\DTOs\SpotifyAlbum;
 use App\DTOs\SpotifyAlbumsResponse;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
 trait HasReleases
@@ -18,17 +20,28 @@ trait HasReleases
             key: 'releases',
             ttl: [now()->addHours(12), now()->addDay()],
             callback: function () {
-                return Spotify::artistAlbums(config('app.artist_id'))
-                    ->includeGroups('album,single')
-                    ->get();
+                $items = collect();
+
+                do {
+                    $response = Spotify::artistAlbums(config('app.artist_id'))
+                        ->limit(50)
+                        ->offset($items->count())
+                        ->includeGroups('album,single')
+                        ->get();
+
+                    $items->push(...$response['items']);
+                } while ($response['next']);
+
+                return $items->all();
             });
     }
 
     /**
      * @throws SpotifyApiException
      */
-    protected function releases(): SpotifyAlbumsResponse
+    protected function releases(): Collection
     {
-        return SpotifyAlbumsResponse::fromArray($this->getReleasesResponse());
+        return collect($this->getReleasesResponse())
+            ->map(fn ($release) => SpotifyAlbum::fromArray($release));
     }
 }

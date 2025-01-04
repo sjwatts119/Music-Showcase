@@ -23,9 +23,13 @@ class UpdateReleases implements ShouldQueue
      */
     public function handle(): void
     {
+//        if(Release::first()?->created_at->diffInDays() < 1) {
+//            return;
+//        }
+
         $releases = $this->releases();
 
-        foreach ($releases->items as $release) {
+        foreach ($releases as $release) {
             $this->updateOrCreateRelease($release);
         }
 

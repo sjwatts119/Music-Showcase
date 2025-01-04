@@ -4,7 +4,7 @@
             <div class="flex gap-4">
                 <div class="flex-shrink">
                     <img
-                        src="{{ $release->media()->first()->url}}"
+                        src="{{ $release->media->first()->url}}"
                         alt="{{ $release->name }}"
                         class="w-24 h-24 rounded-lg"
                     >
@@ -24,5 +24,6 @@
                 </div>
             </div>
         @endforeach
+        {{ $releases->links() }}
     </div>
 </div>
