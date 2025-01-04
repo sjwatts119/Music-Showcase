@@ -25,7 +25,7 @@
 
 @vite(['resources/js/glide.js'])
 
-<div {{ $attributes->merge(['class' => 'glide flex flex-col gap-4']) }} data-glide="{{ collect($config)->toJson() }}">
+<div {{ $attributes->merge(['class' => 'glide flex flex-col gap-4']) }} data-glide="{{ collect($config)->toJson() }}" wire:ignore>
     <div class="glide__track sm:rounded-lg h-full" data-glide-el="track">
         <ul class="glide__slides h-full">
             {{ $slot }}

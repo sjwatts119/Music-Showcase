@@ -22,7 +22,7 @@ class Releases extends Component
     #[Layout('layouts.app')]
     public function render(): View
     {
-        if(Release::first()?->created_at->diffInDays() > 1) {
+        if(Release::count() === 0 || Release::first()->created_at->diffInDays() > 1) {
             (new UpdateReleases())->handle();
         }
 
