@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('releases', function (Blueprint $table) {
+        Schema::create('artists', function (Blueprint $table) {
             $table->id()->primary();
             $table->string('spotify_id')->unique();
             $table->string('name');
-            $table->string('album_type');
-            $table->integer('total_tracks');
-            $table->date('release_date');
-            $table->string('uri');
             $table->string('href');
             $table->timestamps();
         });
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('releases');
+        Schema::dropIfExists('artists');
     }
 };

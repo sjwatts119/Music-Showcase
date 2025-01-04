@@ -3,17 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Prunable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Release extends Model
 {
-    use Prunable;
-
     protected $casts = [
         'release_date' => 'date',
-        'images' => 'array',
-        'artists' => 'array',
-        'metadata' => 'array',
     ];
 
     protected $fillable = [
@@ -28,8 +24,13 @@ class Release extends Model
         'href',
     ];
 
-    public function prunable()
+    public function media(): MorphMany
     {
-        return static::where('created_at', '<=', now()->subWeek());
+        return $this->morphMany(Media::class, 'mediaModel');
+    }
+
+    public function artists(): BelongsToMany
+    {
+        return $this->belongsToMany(Artist::class);
     }
 }

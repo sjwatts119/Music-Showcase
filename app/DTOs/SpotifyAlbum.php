@@ -14,7 +14,7 @@ readonly class SpotifyAlbum
         public int $totalTracks,
         public string $href,
         public Carbon $releaseDate,
-        public string $image,
+        public Collection $images,
         public Collection $artists,
         public string $uri,
         public string $albumGroup,
@@ -29,9 +29,8 @@ readonly class SpotifyAlbum
             totalTracks: $data['total_tracks'],
             href: $data['href'],
             releaseDate: Carbon::parse($data['release_date']),
-            image: $data['images'][0]["url"],
-            artists: collect($data['artists'])
-                ->map(fn ($artist) => SpotifyArtist::fromArray($artist)),
+            images: collect($data['images'])->map(fn ($image) => SpotifyImage::fromArray($image)),
+            artists: collect($data['artists'])->map(fn ($artist) => SpotifyArtist::fromArray($artist)),
             uri: $data['uri'],
             albumGroup: $data['album_group']
         );

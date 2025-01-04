@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use Aerni\Spotify\Exceptions\SpotifyApiException;
 use App\Jobs\UpdateReleases;
+use App\Models\Artist;
+use App\Models\Release;
 use App\Traits\HasReleases;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
@@ -11,8 +13,6 @@ use Livewire\Component;
 
 class Releases extends Component
 {
-    use HasReleases;
-
     /**
      * @throws SpotifyApiException
      */
@@ -21,9 +21,12 @@ class Releases extends Component
     {
         (new UpdateReleases())->handle();
 
+        $releases = Release::with('artists')
+            ->paginate(10);
+
         return view('livewire.releases')
             ->with([
-                'releases' => $this->releases(),
+                'releases' => $releases,
             ]);
     }
 }

@@ -8,7 +8,7 @@ readonly class SpotifyArtist
         public string $id,
         public string $name,
         public string $uri,
-        public array $external_urls
+        public string $href,
     ) {}
 
     public static function fromArray(array $data): self
@@ -17,7 +17,7 @@ readonly class SpotifyArtist
             id: $data['id'],
             name: $data['name'],
             uri: $data['uri'],
-            external_urls: $data['external_urls']
+            href: $data['external_urls']['spotify']
         );
     }
 }
