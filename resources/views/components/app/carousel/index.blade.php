@@ -3,7 +3,7 @@
         'type' => 'carousel',
         'perView' => 1,
         'gap' => 24,
-        'autoplay' => 5000,
+        'autoplay' => 7500,
         'hoverpause' => true,
         'peek' => 48,
         'breakpoints' => [

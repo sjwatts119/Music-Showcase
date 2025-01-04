@@ -29,8 +29,8 @@ new class extends Component
                 Home
             </flux:navbar.item>
             <flux:navbar.item icon="musical-note"
-                              :href="route('releases.index')"
-                              :current="request()->routeIs('releases.*')"
+                              :href="route('release.index')"
+                              :current="request()->routeIs('release.*')"
                               wire:navigate>
                 Releases
             </flux:navbar.item>
@@ -38,6 +38,12 @@ new class extends Component
                               :href="route('site.index')"
                               wire:navigate>
                 Playlists
+            </flux:navbar.item>
+            <flux:navbar.item icon="adjustments-vertical"
+                              :href="route('podcast.index')"
+                              :current="request()->routeIs('podcast.*')"
+                              wire:navigate>
+                Podcasts
             </flux:navbar.item>
         </flux:navbar>
 
@@ -70,7 +76,7 @@ new class extends Component
 
         <flux:navlist variant="outline">
             <flux:navlist.item icon="home" href="{{ route('site.index') }}" :current="request()->routeIs('site.*')">Home</flux:navlist.item>
-            <flux:navlist.item icon="musical-note" href="{{ route('releases.index') }}" :current="request()->routeIs('releases.*')">Releases</flux:navlist.item>
+            <flux:navlist.item icon="musical-note" href="{{ route('release.index') }}" :current="request()->routeIs('releases.*')">Releases</flux:navlist.item>
             <flux:navlist.item icon="play-circle" href="{{ route('site.index') }}">Playlists</flux:navlist.item>
         </flux:navlist>
 

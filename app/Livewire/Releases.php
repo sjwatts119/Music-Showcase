@@ -38,7 +38,7 @@ class Releases extends Component
                 'media',
                 'artists',
             ])
-            ->newReleases()
+            ->latestReleases()
             ->get();
 
         return view('livewire.releases')

@@ -39,10 +39,10 @@ class Release extends Model
     }
 
     /*
-     * Releases from the last 6 months TODO shorten
+     * Get the last 6 releases
      */
-    public function scopeNewReleases(Builder $query): Builder
+    public function scopeLatestReleases(Builder $query): Builder
     {
-        return $query->after(now()->subMonths(24), 'release_date');
+        return $query->latest()->limit(6);
     }
 }

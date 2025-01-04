@@ -5,7 +5,6 @@ namespace App\Traits;
 use Aerni\Spotify\Exceptions\SpotifyApiException;
 use Aerni\Spotify\Facades\SpotifyFacade as Spotify;
 use App\DTOs\SpotifyRelease;
-use App\DTOs\SpotifyReleasesResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 

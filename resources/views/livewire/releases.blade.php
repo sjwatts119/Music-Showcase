@@ -1,7 +1,7 @@
 <div class="max-w-screen-lg m-auto px-4 py-8 md:px-8 space-y-8">
     @if(isset($newReleases) && $newReleases->count() > 2)
         <section id="new-releases" class="space-y-4">
-            <flux:heading size="xl" level="2">New Releases</flux:heading>
+            <flux:heading size="xl" level="2">Latest Releases</flux:heading>
             <x-app.carousel>
                 @foreach ($newReleases as $newRelease)
                     <x-app.carousel.slide class="w-full rounded-2xl overflow-hidden border-2 border-zinc-700/50 shadow-lg">
