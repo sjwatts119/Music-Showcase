@@ -8,9 +8,14 @@ use App\Models\Release;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Livewire\WithoutUrlPagination;
+use Livewire\WithPagination;
 
 class Releases extends Component
 {
+    use WithPagination;
+    use WithoutUrlPagination;
+
     /**
      * @throws SpotifyApiException
      */
