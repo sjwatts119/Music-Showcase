@@ -24,12 +24,12 @@ class Settings extends SettingsPage
                         TextInput::make('spotify_artist_id')
                             ->label('Featured Artist ID')
                             ->required(),
-                        Repeater::make('spotify_album_ids')
-                            ->label('Featured albums')
-                            ->addActionLabel('Add Album')
+                        Repeater::make('spotify_playlist_ids')
+                            ->label('Featured Playlists')
+                            ->addActionLabel('Add Playlist')
                             ->schema([
                                 TextInput::make('id')
-                                    ->label('Album ID')
+                                    ->label('Playlist ID')
                                     ->required(),
                             ]),
                     ])

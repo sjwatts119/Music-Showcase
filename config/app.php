@@ -122,7 +122,4 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
-
-    'artist_id' => env('SPOTIFY_ARTIST_ID'),
-
 ];

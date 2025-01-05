@@ -35,7 +35,8 @@ new class extends Component
                 Releases
             </flux:navbar.item>
             <flux:navbar.item icon="play-circle"
-                              :href="route('site.index')"
+                              :href="route('playlist.index')"
+                              :current="request()->routeIs('playlist.*')"
                               wire:navigate>
                 Playlists
             </flux:navbar.item>
