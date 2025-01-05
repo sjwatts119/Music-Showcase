@@ -8,6 +8,7 @@
     "require": {
         "php": "^8.2",
         "aerni/laravel-spotify": "^2.3",
+        "croustibat/filament-jobs-monitor": "^2.5",
         "filament/filament": "^3.2",
         "filament/spatie-laravel-settings-plugin": "^3.2",
         "laravel/framework": "^11.31",

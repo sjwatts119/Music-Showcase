@@ -7,6 +7,7 @@ use App\Models\Media;
 use App\Models\Playlist;
 use App\Models\PlaylistOwner;
 use App\Traits\HasPlaylists;
+use Croustibat\FilamentJobsMonitor\Traits\QueueProgress;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -16,25 +17,37 @@ use Illuminate\Support\Facades\DB;
 
 class UpdatePlaylists implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, HasPlaylists;
+    use Dispatchable, InteractsWithQueue, Queueable, QueueProgress, SerializesModels, HasPlaylists;
 
     public function handle(): void
     {
+        $this->setProgress(0);
+
         if(!$this->playlistsAreSet()) {
             return;
         }
 
+        $this->setProgress(10);
+
         $this->bustPlaylistsCache();
+
+        $this->setProgress(30);
 
         DB::transaction(function () {
             $this->deleteAllPlaylists();
 
+            $this->setProgress(50);
+
             $playlists = $this->playlists();
+
+            $this->setProgress(70);
 
             foreach ($playlists as $playlist) {
                 $this->createPlaylist($playlist);
             }
         });
+
+        $this->setProgress(100);
     }
 
     private function createPlaylist(SpotifyPlaylist $playlist): void

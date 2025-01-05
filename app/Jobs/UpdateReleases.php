@@ -7,6 +7,7 @@ use App\Models\Artist;
 use App\Models\Media;
 use App\Models\Release;
 use App\Traits\HasReleases;
+use Croustibat\FilamentJobsMonitor\Traits\QueueProgress;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -16,25 +17,33 @@ use Illuminate\Support\Facades\DB;
 
 class UpdateReleases implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, HasReleases;
+    use Dispatchable, InteractsWithQueue, Queueable, QueueProgress, SerializesModels, HasReleases;
 
     public function handle(): void
     {
+        $this->setProgress(0);
+
         if(!$this->artistIsSet()) {
             return;
         }
+        $this->setProgress(10);
 
         $this->bustReleasesCache();
+        $this->setProgress(30);
 
         DB::transaction(function () {
             $this->deleteAllReleases();
+            $this->setProgress(50);
 
             $releases = $this->releases();
+            $this->setProgress(70);
 
             foreach ($releases as $release) {
                 $this->createRelease($release);
             }
         });
+
+        $this->setProgress(100);
     }
 
     private function createRelease(SpotifyRelease $release): void
