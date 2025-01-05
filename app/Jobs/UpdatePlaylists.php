@@ -19,17 +19,17 @@ class UpdatePlaylists implements ShouldQueue
 
     public function handle(): void
     {
-        $playlists = $this->playlists();
+        $this->bustPlaylistsCache();
 
-        DB::transaction(function () use ($playlists) {
+        DB::transaction(function () {
             $this->deleteAllPlaylists();
+
+            $playlists = $this->playlists();
 
             foreach ($playlists as $playlist) {
                 $this->createPlaylist($playlist);
             }
         });
-
-        cache()->forget('playlists');
     }
 
     private function createPlaylist(SpotifyPlaylist $playlist): void

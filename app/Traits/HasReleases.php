@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Cache;
 
 trait HasReleases
 {
+    protected function bustReleasesCache(): void
+    {
+        Cache::forget('releases');
+    }
+
     protected function getReleasesResponse(): array
     {
         return Cache::flexible(

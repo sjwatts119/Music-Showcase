@@ -20,17 +20,17 @@ class UpdateReleases implements ShouldQueue
 
     public function handle(): void
     {
-        $releases = $this->releases();
+        $this->bustReleasesCache();
 
-        DB::transaction(function () use ($releases) {
+        DB::transaction(function () {
             $this->deleteAllReleases();
+
+            $releases = $this->releases();
 
             foreach ($releases as $release) {
                 $this->createRelease($release);
             }
         });
-
-        cache()->forget('releases');
     }
 
     private function createRelease(SpotifyRelease $release): void

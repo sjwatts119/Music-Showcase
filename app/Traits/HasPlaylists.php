@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Cache;
 
 trait HasPlaylists
 {
+    protected function bustPlaylistsCache(): void
+    {
+        Cache::forget('playlists');
+    }
+
     protected function getPlaylistsResponse(): Collection
     {
         return Cache::flexible(

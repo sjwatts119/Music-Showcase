@@ -1,6 +1,6 @@
 <div class="max-w-screen-lg m-auto px-4 py-8 md:px-8 space-y-8">
-    <section id="all-playlists" class="space-y-4">
-        <flux:heading size="xl" level="2">All playlists</flux:heading>
+    <section id="my-playlists" class="space-y-4">
+        <flux:heading size="xl" level="2">My Playlists</flux:heading>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
             @foreach($playlists as $playlist)
                 <div class="space-y-2">
