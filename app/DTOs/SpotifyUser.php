@@ -2,22 +2,24 @@
 
 namespace App\DTOs;
 
-readonly class SpotifyArtist implements DataTransferObject
+readonly class SpotifyUser implements DataTransferObject
 {
     public function __construct(
         public string $id,
-        public string $name,
-        public string $uri,
+        public string $displayName,
         public string $href,
+        public string $uri,
+        public string $type,
     ) {}
 
     public static function fromArray(array $data): self
     {
         return new self(
             id: $data['id'],
-            name: $data['name'],
+            displayName: $data['display_name'],
+            href: $data['external_urls']['spotify'],
             uri: $data['uri'],
-            href: $data['external_urls']['spotify']
+            type: $data['type'],
         );
     }
 }

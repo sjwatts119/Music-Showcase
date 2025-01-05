@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\Cache;
 
 trait HasReleases
 {
-    /**
-     * @throws SpotifyApiException
-     */
     protected function getReleasesResponse(): array
     {
         return Cache::flexible(
@@ -37,9 +34,6 @@ trait HasReleases
             });
     }
 
-    /**
-     * @throws SpotifyApiException
-     */
     protected function releases(): Collection
     {
         return collect($this->getReleasesResponse())

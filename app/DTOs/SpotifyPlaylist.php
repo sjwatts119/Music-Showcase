@@ -2,22 +2,25 @@
 
 namespace App\DTOs;
 
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
-class SpotifyPlaylist
+readonly class SpotifyPlaylist implements DataTransferObject
 {
     public function __construct(
         public string $id,
         public string $name,
-        public string $albumType,
-        public int $totalTracks,
+        public string $description,
+        public bool $collaborative,
         public string $href,
-        public Carbon $releaseDate,
         public Collection $images,
-        public Collection $artists,
+        public SpotifyUser $owner,
+        public ?string $primaryColor,
+        public bool $public,
+        public string $snapshotId,
+        public array $tracks,
+        public string $type,
         public string $uri,
-        public string $albumGroup,
+        public array $followers,
     ) {}
 
     public static function fromArray(array $data): self
@@ -25,14 +28,18 @@ class SpotifyPlaylist
         return new self(
             id: $data['id'],
             name: $data['name'],
-            albumType: $data['album_type'],
-            totalTracks: $data['total_tracks'],
+            description: $data['description'],
+            collaborative: $data['collaborative'],
             href: $data['external_urls']['spotify'],
-            releaseDate: Carbon::parse($data['release_date']),
             images: collect($data['images'])->map(fn ($image) => SpotifyImage::fromArray($image)),
-            artists: collect($data['artists'])->map(fn ($artist) => SpotifyArtist::fromArray($artist)),
+            owner: SpotifyUser::fromArray($data['owner']),
+            primaryColor: $data['primary_color'],
+            public: $data['public'],
+            snapshotId: $data['snapshot_id'],
+            tracks: $data['tracks'],
+            type: $data['type'],
             uri: $data['uri'],
-            albumGroup: $data['album_group']
+            followers: $data['followers'],
         );
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Aerni\Spotify\Facades\SpotifyFacade as Spotify;
+use App\DTOs\SpotifyPlaylist;
 use App\Settings\AppSettings;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -31,6 +32,7 @@ trait HasPlaylists
 
     public function playlists(): Collection
     {
-        return $this->getPlaylistsResponse();
+        return collect($this->getPlaylistsResponse())
+            ->map(fn ($release) => SpotifyPlaylist::fromArray($release));
     }
 }

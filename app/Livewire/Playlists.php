@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use Aerni\Spotify\Exceptions\SpotifyApiException;
-use Aerni\Spotify\Facades\SpotifyFacade as Spotify;
 use App\Jobs\UpdatePlaylists;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
@@ -16,11 +15,7 @@ class Playlists extends Component
      */
     public function test(): void
     {
-
         (new UpdatePlaylists)->handle();
-
-//        $response = Spotify::playlist('60ORXGxg4FOducqNzl5jCr')
-//            ->get();
     }
 
     public function mount(): void

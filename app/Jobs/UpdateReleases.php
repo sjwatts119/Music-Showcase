@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use Aerni\Spotify\Exceptions\SpotifyApiException;
 use App\DTOs\SpotifyRelease;
 use App\Models\Artist;
 use App\Models\Media;
@@ -19,9 +18,6 @@ class UpdateReleases implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, HasReleases;
 
-    /**
-     * @throws SpotifyApiException
-     */
     public function handle(): void
     {
         $releases = $this->releases();

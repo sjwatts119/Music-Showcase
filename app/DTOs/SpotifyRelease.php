@@ -5,7 +5,7 @@ namespace App\DTOs;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
-readonly class SpotifyRelease
+readonly class SpotifyRelease implements DataTransferObject
 {
     public function __construct(
         public string $id,
