@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Cache;
 
 trait HasReleases
 {
+    protected function artistIsSet(): bool
+    {
+        return app(AppSettings::class)->spotify_artist_id !== null;
+    }
+
     protected function bustReleasesCache(): void
     {
         Cache::forget('releases');

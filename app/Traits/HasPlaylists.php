@@ -35,6 +35,11 @@ trait HasPlaylists
             });
     }
 
+    protected function playlistsAreSet(): bool
+    {
+        return !empty(app(AppSettings::class)->spotify_playlist_ids);
+    }
+
     public function playlists(): Collection
     {
         return collect($this->getPlaylistsResponse())

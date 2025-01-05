@@ -20,6 +20,10 @@ class UpdateReleases implements ShouldQueue
 
     public function handle(): void
     {
+        if(!$this->artistIsSet()) {
+            return;
+        }
+
         $this->bustReleasesCache();
 
         DB::transaction(function () {
@@ -70,8 +74,8 @@ class UpdateReleases implements ShouldQueue
 
     private function deleteAllReleases(): void
     {
-        Release::query()->delete();
-        Artist::query()->delete();
-        Media::query()->delete();
+        Release::truncate();
+        Artist::truncate();
+        Media::query()->where('mediaModel_type', Release::class)->delete();
     }
 }

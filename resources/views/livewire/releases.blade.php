@@ -76,12 +76,12 @@
                         </flux:link>
 
                         <div class="flex flex-wrap gap-1">
-                            @foreach($release->artists as $loop->iteration => $artist)
+                            @foreach($release->artists as $index => $artist)
                                 <flux:link :href="$artist->href"
                                            class="text-sm transition"
                                            variant="subtle"
                                            external>
-                                    {{ $artist->name }}{{ $loop->iteration < count($release->artists) ? ',' : '' }}
+                                    {{ $artist->name }}{{ $index + 1 < count($release->artists) ? ',' : '' }}
                                 </flux:link>
                             @endforeach
                         </div>
@@ -90,5 +90,11 @@
                 </div>
             @endforeach
         </div>
+        @if($releases->hasMorePages())
+            <span x-intersect="$wire.loadMore" />
+            <div class="justify-center mt-4" wire:loading.flex="loadMore">
+                <flux:icon icon="loading" />
+            </div>
+        @endif
     </section>
 </div>

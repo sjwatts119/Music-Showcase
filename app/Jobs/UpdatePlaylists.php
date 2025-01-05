@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\DTOs\SpotifyPlaylist;
+use App\Models\Media;
 use App\Models\Playlist;
 use App\Models\PlaylistOwner;
 use App\Traits\HasPlaylists;
@@ -19,6 +20,10 @@ class UpdatePlaylists implements ShouldQueue
 
     public function handle(): void
     {
+        if(!$this->playlistsAreSet()) {
+            return;
+        }
+
         $this->bustPlaylistsCache();
 
         DB::transaction(function () {
@@ -64,7 +69,8 @@ class UpdatePlaylists implements ShouldQueue
 
     private function deleteAllPlaylists(): void
     {
-        Playlist::query()->delete();
-        PlaylistOwner::query()->delete();
+        Playlist::truncate();
+        PlaylistOwner::truncate();
+        Media::query()->where('mediaModel_type', Playlist::class)->delete();
     }
 }

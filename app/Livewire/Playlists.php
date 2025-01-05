@@ -7,23 +7,17 @@ use App\Jobs\UpdatePlaylists;
 use App\Models\Playlist;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 class Playlists extends Component
 {
-    /**
-     * @throws SpotifyApiException
-     */
-    public function test(): void
-    {
-        if (Playlist::count() === 0 || Playlist::first()->created_at->diffInDays() > 1) {
-            (new UpdatePlaylists)->handle();
-        }
-    }
+    #[Locked]
+    public int $perPage = 18;
 
-    public function mount(): void
+    public function loadMore(): void
     {
-        $this->test();
+        $this->perPage += 18;
     }
 
     #[Layout('layouts.app')]
@@ -34,7 +28,7 @@ class Playlists extends Component
                 'media',
                 'owner',
             ])
-            ->get();
+            ->paginate($this->perPage);
 
         return view('livewire.playlists')
             ->with([

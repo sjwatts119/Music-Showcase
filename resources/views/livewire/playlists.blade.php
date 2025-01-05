@@ -29,5 +29,11 @@
                 </div>
             @endforeach
         </div>
+        @if($playlists->hasMorePages())
+            <span x-intersect="$wire.loadMore" />
+            <div class="justify-center mt-4" wire:loading.flex="loadMore">
+                <flux:icon icon="loading" />
+            </div>
+        @endif
     </section>
 </div>
