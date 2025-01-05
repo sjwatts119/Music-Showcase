@@ -19,7 +19,7 @@
         <div class="min-h-screen">
             <livewire:layout.navigation />
 
-            <main>
+            <main class="max-w-screen-lg m-auto px-4 py-8 md:px-8">
                 {{ $slot }}
             </main>
         </div>

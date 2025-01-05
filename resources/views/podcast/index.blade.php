@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="max-w-screen-lg m-auto px-4 py-8 md:px-8 space-y-8">
+    <div class="space-y-8">
 
         <section id="depth-perception">
             <iframe width="100%" height="600" scrolling="no" frameborder="no" allow="autoplay"
