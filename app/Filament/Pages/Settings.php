@@ -18,6 +18,19 @@ class Settings extends SettingsPage
 
     protected static string $settings = AppSettings::class;
 
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+       $data['spotify_artist_id'] = trim($data['spotify_artist_id']);
+
+       $data['spotify_playlist_ids'] = collect($data['spotify_playlist_ids'])
+           ->map(fn($playlist) => [
+               'id' => trim($playlist['id']),
+           ])
+           ->toArray();
+
+       return $data;
+    }
+
     public function form(Form $form): Form
     {
         return $form
