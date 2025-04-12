@@ -35,7 +35,7 @@ To run Music Showcase locally, follow these steps:
 - For best results, ensure the Laravel queue worker is running.
 - Schedule the artisan command to run the jobs daily.
 - Use the immediate refresh button after changing Artist or Playlist IDs.
-- For a technical breakdown of this project, please refer to this [Blog Post](https://sjwatts.com/projects/music-site)
+- For a technical breakdown of this project, please refer to this [Blog Post](https://sjwatts.com/projects/music-site).
 
 ## Development Status
 
