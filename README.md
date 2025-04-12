@@ -1,66 +1,45 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Music Showcase
+Music Showcase automatically updates and displays artists' new Spotify releases daily in an engaging format with links to stream directly. It also supports featuring playlists, all pulled from Spotify's API for seamless promotion.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Installation
+To run Music Showcase locally, follow these steps:
+### Prerequisites
+- **Docker:** Ensure Docker is installed and running on your machine.
+- **Spotify API Credentials:** You will need to create a Spotify Developer account and obtain API credentials.
+### Steps
+1. **Clone the Repository**
+2. **Set up Environment Variables** (Ensure ```SPOTIFY_CLIENT_ID``` and ```SPOTIFY_CLIENT_SECRET``` are populated)
+3. **Install Composer Dependencies:** ```composer install```
+4. **Start Docker Containers:** ```./vendor/bin/sail up```
+5. **Generate Application Key:** ```./vendor/bin/sail artisan key:generate```
+6. **Run Database Migration:** ```./vendor/bin/sail artisan migrate```
+7. **Create Storage Symlink:** ```./vendor/bin/sail artisan storage:link```
+8. **Install NPM Dependencies:** ```./vendor/bin/sail npm install```
+9. **Build Frontend Assets:** ```./vendor/bin/sail npm run build```
+10. **Access the Application:** Music Showcase should now be accessible at 127.0.0.1
 
-## About Laravel
+## Usage Guide
+### Configuration
+1. Access the Filament admin panel to configure the application.
+2. Enter a single Spotify Artist ID to track releases.
+3. Add unlimited Playlist IDs to showcase curated collections.
+4. Use the Refresh buttons to get fresh data from Spotify.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### How It Works
+- Daily scheduled jobs fetch new releases and playlists from Spotify.
+- Data is stored in the database to minimize API calls and improve performance.
+- Content is displayed using Livewire components with infinite scrolling.
+- The application automatically handles Spotify's pagination to ensure all content is collected.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Tips
+- For best results, ensure the Laravel queue worker is running.
+- Schedule the artisan command to run the jobs daily.
+- Use the immediate refresh button after changing Artist or Playlist IDs.
+- For a technical breakdown of this project, please refer to this [Blog Post](https://sjwatts.com/projects/music-site)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Development Status
 
-## Learning Laravel
+Music Showcase is currently in active development and is not yet a finished project. Some aspects of the project may be in an incomplete state, therefore it is not recommended to use this project in production.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Maintainers
+- **Sam Watts** - [@sjwatts119](https://github.com/sjwatts119)
