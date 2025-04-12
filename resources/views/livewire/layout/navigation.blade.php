@@ -6,15 +6,6 @@ use App\Models\Release;
 use Livewire\Volt\Component;
 
 new class extends Component {
-    private function showsPlaylistsNavItem(): bool
-    {
-        return Playlist::count() > 0;
-    }
-
-    private function showsReleasesNavItem(): bool
-    {
-        return Release::count() > 0;
-    }
 
     /**
      * Log the current user out of the application.
@@ -33,43 +24,21 @@ new class extends Component {
         <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left"/>
 
         <flux:navbar class="-mb-px max-lg:hidden">
-            <flux:navbar.item icon="home"
+            <flux:navbar.item icon="musical-note"
                               :href="route('site.index')"
                               :current="request()->routeIs('site.*')"
                               wire:navigate>
-                Home
+                Releases
             </flux:navbar.item>
-            @if($this->showsReleasesNavItem())
-                <flux:navbar.item icon="musical-note"
-                                  :href="route('release.index')"
-                                  :current="request()->routeIs('release.*')"
-                                  wire:navigate>
-                    Releases
-                </flux:navbar.item>
-            @endif
-            @if($this->showsPlaylistsNavItem())
-                <flux:navbar.item icon="play-circle"
-                                  :href="route('playlist.index')"
-                                  :current="request()->routeIs('playlist.*')"
-                                  wire:navigate>
-                    Playlists
-                </flux:navbar.item>
-            @endif
-            <flux:navbar.item icon="adjustments-vertical"
-                              :href="route('podcast.index')"
-                              :current="request()->routeIs('podcast.*')"
+            <flux:navbar.item icon="play-circle"
+                              :href="route('playlist.index')"
+                              :current="request()->routeIs('playlist.*')"
                               wire:navigate>
-                Podcasts
+                Playlists
             </flux:navbar.item>
         </flux:navbar>
 
         <flux:spacer/>
-
-        <flux:navbar class="-mb-px">
-            <flux:modal.trigger name="search" shortcut="cmd.k">
-                <flux:navbar.item icon="magnifying-glass" label="Search"/>
-            </flux:modal.trigger>
-        </flux:navbar>
 
         @auth
             <flux:dropdown position="top" align="start">
@@ -93,13 +62,15 @@ new class extends Component {
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark"/>
 
         <flux:navlist variant="outline">
-            <flux:navlist.item icon="home" href="{{ route('site.index') }}" :current="request()->routeIs('site.*')">
-                Home
+            <flux:navlist.item icon="musical-note"
+                               href="{{ route('site.index') }}"
+                               :current="request()->routeIs('site.*')"
+            >
+                Releases
             </flux:navlist.item>
-            <flux:navlist.item icon="musical-note" href="{{ route('release.index') }}"
-                               :current="request()->routeIs('releases.*')">Releases
+            <flux:navlist.item icon="play-circle" href="{{ route('playlist.index') }}">
+                Playlists
             </flux:navlist.item>
-            <flux:navlist.item icon="play-circle" href="{{ route('site.index') }}">Playlists</flux:navlist.item>
         </flux:navlist>
 
         <flux:spacer/>
@@ -109,21 +80,5 @@ new class extends Component {
             <flux:navlist.item icon="information-circle" href="#">Help</flux:navlist.item>
         </flux:navlist>
     </flux:sidebar>
-
-    <flux:modal name="search" variant="bare" class="w-full max-w-[30rem] my-[12vh] max-h-screen overflow-y-hidden"
-                x-on:keydown.cmd.k.document="$el.showModal()">
-        <flux:command class="border-none shadow-lg inline-flex flex-col max-h-[76vh]">
-            <flux:command.input placeholder="Search..." closable/>
-
-            <flux:command.items>
-                <flux:command.item icon="user-plus" kbd="⌘A">Assign to…</flux:command.item>
-                <flux:command.item icon="document-plus">Create new file</flux:command.item>
-                <flux:command.item icon="folder-plus" kbd="⌘⇧N">Create new project</flux:command.item>
-                <flux:command.item icon="book-open">Documentation</flux:command.item>
-                <flux:command.item icon="newspaper">Changelog</flux:command.item>
-                <flux:command.item icon="cog-6-tooth" kbd="⌘,">Settings</flux:command.item>
-            </flux:command.items>
-        </flux:command>
-    </flux:modal>
 </div>
 

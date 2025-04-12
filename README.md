@@ -16,7 +16,8 @@ To run Music Showcase locally, follow these steps:
 7. **Create Storage Symlink:** ```./vendor/bin/sail artisan storage:link```
 8. **Install NPM Dependencies:** ```./vendor/bin/sail npm install```
 9. **Build Frontend Assets:** ```./vendor/bin/sail npm run build```
-10. **Access the Application:** Music Showcase should now be accessible at 127.0.0.1
+10. **Run the Queue Worker:** ```./vendor/bin/sail artisan queue:work```
+11. **Access the Application:** Music Showcase should now be accessible at 127.0.0.1
 
 ## Usage Guide
 ### Configuration
@@ -27,7 +28,7 @@ To run Music Showcase locally, follow these steps:
 
 ### How It Works
 - Daily scheduled jobs fetch new releases and playlists from Spotify.
-- Data is stored in the database to minimize API calls and improve performance.
+- Data is stored in the database to minimise API calls and improve performance.
 - Content is displayed using Livewire components with infinite scrolling.
 - The application automatically handles Spotify's pagination to ensure all content is collected.
 

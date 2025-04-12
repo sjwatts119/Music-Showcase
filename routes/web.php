@@ -4,17 +4,11 @@ use App\Livewire\Playlists;
 use App\Livewire\Releases;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn () => view('site.index'))
+Route::get('/', Releases::class)
     ->name('site.index');
-
-Route::get('releases', Releases::class)
-    ->name('release.index');
 
 Route::get('playlists', Playlists::class)
     ->name('playlist.index');
-
-Route::get('podcasts', fn() => view('podcast.index'))
-    ->name('podcast.index');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

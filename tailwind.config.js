@@ -16,7 +16,7 @@ export default {
             },
             colors: {
                 zinc: colors.gray,
-                
+
                 accent: {
                     DEFAULT: 'var(--color-accent)',
                     content: 'var(--color-accent-content)',
